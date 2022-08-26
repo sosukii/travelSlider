@@ -1,0 +1,136 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+/* destinations -------------------------------*/
+    .destinations{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 1440px;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+    .destinations h2{
+        text-transform: uppercase;
+        font-family: 'Red Hat Text';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 40px;
+        line-height: 53px;
+
+        color: #F2785C;
+        margin-bottom: 46px;
+    }
+
+
+
+/* slider -------------------------------------*/
+
+    /* slider-container, wrapper */
+
+    .slider-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .slider-container button{
+        font-family: 'Red Hat Text';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 32px;
+        background-color: #0D606F;
+
+        border:none;
+        color: #FFFFFF;
+
+        background: #0D606F;
+        box-shadow: 0px 0px 3px rgba(13, 96, 111, 0.08), 0px 2px 3px rgba(13, 96, 111, 0.16);
+        border-radius: 10px;
+
+        display: flex;
+        align-items: center;
+        padding: 13.5px 31px;
+    }
+    .slider-container button::before{
+        content: url(./img/bi_arrow-right.svg);
+        width: 40px;
+        height: 40px;
+        padding-right: 10px;
+    }
+
+    .slider-wrapper{
+        display: flex;
+        justify-content: center;
+        position: relative;
+    }
+
+    /* slider, slider-line */
+
+    .slider{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .slider-line{
+        display: flex;
+        justify-content: center;
+        gap: 60px;
+        position: relative;
+        left: 0;
+        transition: 1s;
+    }
+    .slider-line div p{
+        position: absolute;
+        left: 15px;
+        bottom: 40px;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+
+        font-family: 'Red Hat Text';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 32px;
+        line-height: 42px;
+
+        color: #FFFFFF;
+    }
+
+    /* slide, img */
+
+    .slide{
+        position: relative;
+    }
+    .slide img{
+        border-radius: 16px;
+        width: calc(360px + (800 - 360) * (100vw - 390px) / (1440 - 390));
+        height: calc(210px + (800 - 210) * (100vw - 390px) / (1440 - 390));
+    }
+/* slider -------------------------------------*/
+
+/* dots -------------------------------------*/
+    .dots{
+        display: flex;
+        gap:10px;
+        margin-top: 24px;
+        margin-bottom:40px;
+    }
+    .dot{
+        background-color: #F2785C;
+        opacity: 0.5;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        transition: 1s;
+    }
+    .dot:hover{
+        background-color: #ffb000;
+        cursor: pointer;
+    }
+    .dot-active{
+        opacity: 1;
+    }
+/* dots -------------------------------------*/
