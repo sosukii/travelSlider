@@ -51,23 +51,23 @@
     }
 }
 
-.arrow-to-left{
+.arrow-to-left {
     transform: scale(-1, 1); 
     opacity: 0.8;
     cursor: pointer;
     border: 2px solid red;
 }
-.arrow-to-right{
+.arrow-to-right {
     opacity: 0.8;
     cursor: pointer;
     border: 2px solid green;
 }
 
-.arrow{
+.arrow {
     width: calc(360px + (800 - 360) * (100vw - 390px) / (1440 - 390));
     height: calc(210px + (800 - 210) * (100vw - 390px) / (1440 - 390));
 }
-.arrows{
+.arrows {
     display: flex;
     justify-content: center;
     gap: 60px;
