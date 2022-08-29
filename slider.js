@@ -1,4 +1,4 @@
-const images = document.querySelectorAll('.slider-line > .slide > img')
+const images = document.querySelectorAll('.slide-image')
 
 const dots = document.querySelectorAll('.dots div')
 const array_dots = Array.from(dots)
@@ -13,7 +13,7 @@ const arrowRight = document.querySelector('.arrow-to-right')
 let offsetLeft = 0
 
 function returnCurrentSlideWidth(){
-    return +(window.getComputedStyle(document.querySelector('.slider-line > .slide > img')).width.replace('px', ''))
+    return +(window.getComputedStyle(document.querySelector('.slide-image')).width.replace('px', ''))
 }
 function returnOffset_byDirection(direction){
     return direction === 'right'? offsetLeft : -offsetLeft
@@ -23,7 +23,13 @@ function returnActiveDot_index(){
     return array_dots.indexOf(active_dot)
 }
 function returnNextDotBy(activeDot_index, direction){
-    const nextDot_index = direction === 'right' ? activeDot_index+1 : activeDot_index-1 
+    let nextDot_index
+    if(direction === 'right'){
+        nextDot_index = activeDot_index+1
+    } else {
+        nextDot_index = activeDot_index-1
+    }
+
     return array_dots[nextDot_index]
 }
 
@@ -31,7 +37,16 @@ function isWidthSwapBiggerThenFreePlace(direction){
     return returnOffset_byDirection(direction) > (returnCurrentSlideWidth()*images.length)/2
 }
 function isLastOrFirstDot(nextDot) {
-    return array_dots.indexOf(nextDot) === array_dots.length - 1 || array_dots.indexOf(nextDot) === 0
+    const isLastDot = array_dots.indexOf(nextDot) === array_dots.length - 1
+    const isFirstDot = array_dots.indexOf(nextDot) === 0
+
+    if(isLastDot){
+        arrowLeft.style.position = 'static'
+    } else if(isFirstDot){
+        arrowRight.style.position = 'static'
+    }
+
+    return isLastDot || isFirstDot
 }
 function removeActiveFromDots(){
     array_dots.forEach(dot => dot.classList.remove('dot-active'))
@@ -135,4 +150,5 @@ window.addEventListener('resize', () => {
     removeActiveFromDots()
     setDefaultDot()
     setDefaultSlide()
+    moveArrowsByDefault()
 })
