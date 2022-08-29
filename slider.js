@@ -12,29 +12,40 @@ const arrowRight = document.querySelector('.arrow-to-right')
 
 let offsetLeft = 0
 
-function isLastOrFirstDot(nextDot) {
-    return array_dots.indexOf(nextDot) === array_dots.length - 1 || array_dots.indexOf(nextDot) === 0
-}
-
 function returnCurrentSlideWidth(){
     return +(window.getComputedStyle(document.querySelector('.slider-line > .slide > img')).width.replace('px', ''))
-}
-function setOffset(direction){
-    offsetLeft = direction === 'right'
-        ? offsetLeft + returnCurrentSlideWidth()+sliderLine_gap
-        : offsetLeft - returnCurrentSlideWidth()-sliderLine_gap
 }
 function returnOffset_byDirection(direction){
     return direction === 'right'? offsetLeft : -offsetLeft
 }
+function returnActiveDot_index(){
+    const active_dot = document.querySelector('.dot-active')
+    return array_dots.indexOf(active_dot)
+}
+function returnNextDotBy(activeDot_index, direction){
+    const nextDot_index = direction === 'right' ? activeDot_index+1 : activeDot_index-1 
+    return array_dots[nextDot_index]
+}
+
 function isWidthSwapBiggerThenFreePlace(direction){
     return returnOffset_byDirection(direction) > (returnCurrentSlideWidth()*images.length)/2
+}
+function isLastOrFirstDot(nextDot) {
+    return array_dots.indexOf(nextDot) === array_dots.length - 1 || array_dots.indexOf(nextDot) === 0
 }
 function removeActiveFromDots(){
     array_dots.forEach(dot => dot.classList.remove('dot-active'))
 }
 
+function setOffset(direction){
+    if(direction === 'right'){
+        offsetLeft = offsetLeft + returnCurrentSlideWidth()+sliderLine_gap
+    } else {
+        offsetLeft = offsetLeft - returnCurrentSlideWidth()-sliderLine_gap
+    }
+}
 function setDefaultDot(){
+    removeActiveFromDots()
     default_activeDot.classList.add('dot-active')
 }
 function setDefaultSlide(){
@@ -43,72 +54,62 @@ function setDefaultSlide(){
 }
 
 
-
-function swapSlideTo(direction){
+function swapDot(next_dot){
     const active_dot = document.querySelector('.dot-active')
+    active_dot.classList.remove('dot-active')
 
-    // высчитываем оффсет
+    if(next_dot) next_dot.classList.add('dot-active')
+}
+function swapSlideTo(direction){
+    const nextDot = returnNextDotBy(returnActiveDot_index(), direction)
+
     setOffset(direction)
         
     if(isWidthSwapBiggerThenFreePlace(direction)) {
         setDefaultSlide()
         setDefaultDot()
         moveArrowsByDefault()
-    }
-
-    // двигаем слайдерлайн
-    sliderLine.style.left = -offsetLeft + 'px'
+    } else swapDot(nextDot)
     
-    // получаем индекс эктив дот, двигаем дот
-    const active_dot_index = array_dots.indexOf(active_dot)
-    active_dot.classList.remove('dot-active')
-    const nextDot_index = direction === 'right'
-        ?  active_dot_index+1 
-        :  active_dot_index-1 
-    const nextDot = array_dots[nextDot_index]
-
-    if(nextDot) nextDot.classList.add('dot-active')
+    sliderLine.style.left = -offsetLeft + 'px'
  
-    // двигаем стрелки
-    isLastOrFirstDot(nextDot)
-        ? moveArrowsCloser(direction)
-        : moveArrowsByDefault()
+    isLastOrFirstDot(nextDot) ? moveArrowsCloser(direction) : moveArrowsByDefault()
 }
 function swapSlideTo_byDot(width, direction){
     const active_dot = document.querySelector('.dot-active')
 
-    offsetLeft = direction ==='right'
-    ? offsetLeft + width
-    : offsetLeft - width
+    if(direction ==='right'){
+        offsetLeft = offsetLeft + width  
+    } else {
+        offsetLeft = offsetLeft - width
+    }
 
     sliderLine.style.left = -offsetLeft + 'px'
 
-    isLastOrFirstDot(active_dot)
-        ? moveArrowsCloser(direction)
-        : moveArrowsByDefault()
+    isLastOrFirstDot(active_dot) ? moveArrowsCloser(direction) : moveArrowsByDefault()
 }
 
 function howMuchSlidesListed(baseIndex, clickedIndex){
     if(baseIndex === clickedIndex) return 0
-    return clickedIndex > baseIndex ? clickedIndex - baseIndex : baseIndex - clickedIndex
+
+    return Math.abs(clickedIndex - baseIndex)
 }
+
 function moveArrowsByDefault(){
     arrowRight.style.position = 'static'
     arrowLeft.style.position = 'static'
 }
 function moveArrowsCloser(direction){
-    const width = direction === 'right'
-        ? - returnCurrentSlideWidth() - sliderLine_gap
-        : returnCurrentSlideWidth() + sliderLine_gap
-
+    let width
     if(direction === 'right'){
+        width = - returnCurrentSlideWidth() - sliderLine_gap
         arrowRight.style.position = 'relative'
         arrowRight.style.left = width + 'px'
-    } else{
+    } else {
+        width = returnCurrentSlideWidth() + sliderLine_gap
         arrowLeft.style.position = 'relative'
         arrowLeft.style.left = width + 'px'
     }
-
 }
 
 document.querySelector('.dots').addEventListener('click', () => {
