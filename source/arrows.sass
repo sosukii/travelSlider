@@ -1,0 +1,24 @@
+@mixin adaptiveProp($targetProp, $minWidth, $maxWidth)
+    #{$targetProp}: calc(($minWidth * 1px) + ($maxWidth - $minWidth) * (100vw - 390px) / (1440 - 390))
+
+.arrow-to-left
+    transform: scale(-1, 1) 
+    opacity: 0.8
+    cursor: pointer
+    border: 2px solid red
+
+.arrow-to-right
+    opacity: 0.8
+    cursor: pointer
+    border: 2px solid green
+
+.arrow
+    @include adaptiveProp('width', 360, 800)
+    @include adaptiveProp('height', 210, 800)
+
+.arrows
+    display: flex
+    justify-content: center
+    gap: 60px
+    position: absolute
+    transition: 1s
