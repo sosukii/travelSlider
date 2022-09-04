@@ -1,15 +1,10 @@
+.arrow-to-left, .arrow-to-right {
+  cursor: pointer;
+}
+
 .arrow-to-left {
   -webkit-transform: scale(-1, 1);
           transform: scale(-1, 1);
-  opacity: 0.8;
-  cursor: pointer;
-  border: 2px solid red;
-}
-
-.arrow-to-right {
-  opacity: 0.8;
-  cursor: pointer;
-  border: 2px solid green;
 }
 
 .arrow {
@@ -28,4 +23,19 @@
   position: absolute;
   -webkit-transition: 1s;
   transition: 1s;
+}
+
+@media (max-width: 560px) {
+  .arrows {
+    width: calc(360px + 440 * (100vw - 390px) / 1050);
+  }
+
+  .arrow-to-left, .arrow-to-right {
+    padding-right: 11px;
+  }
+}
+@media (max-width: 390px) {
+  .arrows {
+    width: calc(360px + 440 * (100vw - 390px) / 1050);
+  }
 }

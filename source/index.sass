@@ -1,3 +1,8 @@
+* 
+    margin: 0
+    padding: 0
+
+
 @mixin adaptiveProp($targetProp, $minWidth, $maxWidth)
     #{$targetProp}: calc(($minWidth * 1px) + ($maxWidth - $minWidth) * (100vw - 390px) / (1440 - 390))
 
@@ -67,8 +72,9 @@
 .dot
     background-color: #F2785C
     opacity: 0.5
-    width: 20px
-    height: 20px
+    @include adaptiveProp('width', 8, 20)
+    @include adaptiveProp('height', 8, 20)
+
     border-radius: 50%
     transition: 1s
 
@@ -87,13 +93,10 @@
     @include adaptiveProp('line-height', 15, 32)
 
     background-color: #0D606F
-
-    border:none
     color: #FFFFFF
-
-    background: #0D606F
     box-shadow: 0px 0px 3px rgba(13, 96, 111, 0.08), 0px 2px 3px rgba(13, 96, 111, 0.16)
     border-radius: 10px
+    border: none
 
     display: flex
     align-items: center
@@ -114,3 +117,29 @@
     display: flex
     justify-content: center
     position: relative
+
+
+@media (max-width: 560px)
+    .arrow-to-right
+        content: url(../img/mobile/slider-arrow-right.svg)
+        @include adaptiveProp('width', 20, 25)
+    .arrow-to-left
+        content: url(../img/mobile/slider-arrow-right.svg)
+        transform: scale(-1, 1)
+        @include adaptiveProp('width', 20, 25)
+
+@media (max-width: 390px)
+    .slide-image_japan
+        content: url(../img/mobile/japan_mobile.jpg)
+    .slide-image_spain
+        content: url(../img/mobile/spain_mobile.jpg)
+    .slide-image_usa
+        content: url(../img/mobile/usa_mobile.jpg)
+
+    .slide-title
+        top: 8px
+    .dots
+        position: absolute
+        bottom: 12px
+        z-index: 2
+

@@ -12,6 +12,9 @@ const arrowRight = document.querySelector('.arrow-to-right')
 
 let offsetLeft = 0
 
+function isMobileWidth(){
+    return window.innerWidth <= 560
+}
 function returnCurrentSlideWidth(){
     return +(window.getComputedStyle(document.querySelector('.slide-image')).width.replace('px', ''))
 }
@@ -87,12 +90,17 @@ function swapSlideTo(direction){
     } else swapDot(nextDot)
     
     sliderLine.style.left = -offsetLeft + 'px'
- 
-    isLastOrFirstDot(nextDot) ? moveArrowsCloser(direction) : moveArrowsByDefault()
+
+    if(isLastOrFirstDot(nextDot) && !isMobileWidth()){
+        moveArrowsCloser(direction)
+    } else {
+        moveArrowsByDefault()
+    }
+    // isLastOrFirstDot(nextDot) ? moveArrowsCloser(direction) : moveArrowsByDefault()
 }
 function swapSlideTo_byDot(width, direction){
     const active_dot = document.querySelector('.dot-active')
-
+  
     if(direction ==='right'){
         offsetLeft = offsetLeft + width  
     } else {
@@ -101,7 +109,12 @@ function swapSlideTo_byDot(width, direction){
 
     sliderLine.style.left = -offsetLeft + 'px'
 
-    isLastOrFirstDot(active_dot) ? moveArrowsCloser(direction) : moveArrowsByDefault()
+    if(isLastOrFirstDot(active_dot) && !isMobileWidth()){
+        moveArrowsCloser(direction)
+    } else {
+        moveArrowsByDefault()
+    }
+    // isLastOrFirstDot(active_dot) ? moveArrowsCloser(direction) : moveArrowsByDefault()
 }
 
 function howMuchSlidesListed(baseIndex, clickedIndex){
