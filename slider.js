@@ -36,9 +36,6 @@ function returnNextDotBy(activeDot_index, direction){
     return array_dots[nextDot_index]
 }
 
-function isWidthSwapBiggerThenFreePlace(direction){
-    return returnOffset_byDirection(direction) > (returnCurrentSlideWidth()*images.length)/2
-}
 function isLastOrFirstDot(nextDot) {
     const isLastDot = array_dots.indexOf(nextDot) === array_dots.length - 1
     const isFirstDot = array_dots.indexOf(nextDot) === 0
@@ -82,12 +79,14 @@ function swapSlideTo(direction){
     const nextDot = returnNextDotBy(returnActiveDot_index(), direction)
 
     setOffset(direction)
-        
-    if(isWidthSwapBiggerThenFreePlace(direction)) {
+
+    if(nextDot){
+        swapDot(nextDot)
+    } else{
         setDefaultSlide()
         setDefaultDot()
         moveArrowsByDefault()
-    } else swapDot(nextDot)
+    }
     
     sliderLine.style.left = -offsetLeft + 'px'
 
@@ -96,7 +95,6 @@ function swapSlideTo(direction){
     } else {
         moveArrowsByDefault()
     }
-    // isLastOrFirstDot(nextDot) ? moveArrowsCloser(direction) : moveArrowsByDefault()
 }
 function swapSlideTo_byDot(width, direction){
     const active_dot = document.querySelector('.dot-active')
